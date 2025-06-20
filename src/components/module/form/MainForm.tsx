@@ -11,6 +11,8 @@ import { FormSelect } from "./FormSelect";
 import { FormCheckbox } from "./FormCheckbox";
 import { FormRadioGroup } from "./FormRadioGroupProps";
 import { FormSelectWithInputSearch } from "./FormSelectWithInputSearch";
+import FormImageInput from "./FormImageInput";
+import FormFileInput from "./FormImageInput";
 const countryOptions = [
   { label: "Bangladesh", value: "bangladesh" },
   { label: "India", value: "india" },
@@ -41,7 +43,7 @@ const countryOptions = [
 const formSchema = z.object({
   name: z.string().min(1, "Please enter your name"),
   gender: z.string().min(1, "Please select your gender"),
-  country: z.string().min(1, "Please select your gender"),
+  country: z.string().min(1, "Please select your country"),
   dob: z.preprocess(
     (val) => {
       if (val instanceof Date) return val;
@@ -56,6 +58,14 @@ const formSchema = z.object({
       invalid_type_error: "Please enter a valid date of birth",
     })
   ),
+  document: z
+    .any()
+    .refine((file) => file instanceof File || (file && file.length > 0), {
+      message: "Profile picture is required",
+    })
+    .refine((file) => !file || file.size <= 1024 * 1024, {
+      message: "File must be under 1MB",
+    }),
   agree: z.boolean().refine((v) => v, {
     message: "You must agree to the terms and conditions",
   }),
@@ -72,11 +82,29 @@ export default function MainForm() {
       agree: false,
       paymentMethod: "",
       country: "",
+      document: undefined,
     },
   });
 
   const onSubmit = (values: any) => {
-    console.log(values);
+    console.log("Raw values2:", values);
+
+    const formData = new FormData();
+    formData.append("image", values.profileImage);
+
+    // formData.append("name", values.name);
+    // formData.append("gender", values.gender);
+    // formData.append("country", values.country);
+    // formData.append("dob", values.dob.toISOString());
+    // formData.append("paymentMethod", values.paymentMethod);
+
+    console.log("Raw values:", values);
+
+    // কোনো API-তে পাঠাতে চাইলে:
+    // fetch("/api/upload", {
+    //   method: "POST",
+    //   body: formData,
+    // });
   };
 
   return (
@@ -127,12 +155,19 @@ export default function MainForm() {
           control={form.control}
           options={countryOptions}
         />
+
+        <FormFileInput
+          name="document"
+          label="Upload File"
+          control={form.control}
+          accept="image/*,application/pdf,video/*"
+          description="Supports image, PDF or video file"
+        />
         <FormCheckbox
           name="agree"
           label="I agree to the terms and conditions"
           control={form.control}
         />
-
         <Button type="submit">Submit</Button>
       </form>
     </Form>
