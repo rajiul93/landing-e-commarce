@@ -63,7 +63,7 @@ export default function MainForm() {
           control={form.control}
         />
 
-        <div className="md:flex justify-between items-center gap-4">
+        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
           <FormSelect
             control={form.control}
             label="Gender"

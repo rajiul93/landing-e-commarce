@@ -28,7 +28,7 @@ export const FormCheckbox = ({ name, label, control }: FormCheckboxProps) => {
             />
           </FormControl>
           <FormLabel className="font-normal">{label}</FormLabel>
-          <FormMessage />
+          {/* <FormMessage /> */}
         </FormItem>
       )}
     />
