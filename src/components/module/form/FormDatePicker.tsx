@@ -39,7 +39,7 @@ export const FormDatePicker = ({
               <FormControl>
                 <Button
                   variant={"outline"}
-                  className={"w-full pl-3 text-left font-normal bg-transparent"}
+                  className={"w-full pl-3 text-left font-normal rounded-[4px] bg-transparent"}
                 >
                   {field.value ? (
                     format(field.value, "PPP")
