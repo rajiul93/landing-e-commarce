@@ -10,10 +10,38 @@ import { FormDatePicker } from "./FormDatePicker";
 import { FormSelect } from "./FormSelect";
 import { FormCheckbox } from "./FormCheckbox";
 import { FormRadioGroup } from "./FormRadioGroupProps";
-
+import { FormSelectWithInputSearch } from "./FormSelectWithInputSearch";
+const countryOptions = [
+  { label: "Bangladesh", value: "bangladesh" },
+  { label: "India", value: "india" },
+  { label: "Pakistan", value: "pakistan" },
+  { label: "Nepal", value: "nepal" },
+  { label: "Sri Lanka", value: "sri-lanka" },
+  { label: "United States", value: "united-states" },
+  { label: "United Kingdom", value: "united-kingdom" },
+  { label: "Canada", value: "canada" },
+  { label: "Australia", value: "australia" },
+  { label: "Germany", value: "germany" },
+  { label: "France", value: "france" },
+  { label: "Italy", value: "italy" },
+  { label: "Spain", value: "spain" },
+  { label: "China", value: "china" },
+  { label: "Japan", value: "japan" },
+  { label: "South Korea", value: "south-korea" },
+  { label: "Malaysia", value: "malaysia" },
+  { label: "Singapore", value: "singapore" },
+  { label: "Saudi Arabia", value: "saudi-arabia" },
+  { label: "United Arab Emirates", value: "uae" },
+  { label: "Qatar", value: "qatar" },
+  { label: "Kuwait", value: "kuwait" },
+  { label: "Philippines", value: "philippines" },
+  { label: "Egypt", value: "egypt" },
+  { label: "Turkey", value: "turkey" },
+];
 const formSchema = z.object({
   name: z.string().min(1, "Please enter your name"),
   gender: z.string().min(1, "Please select your gender"),
+  country: z.string().min(1, "Please select your gender"),
   dob: z.preprocess(
     (val) => {
       if (val instanceof Date) return val;
@@ -43,6 +71,7 @@ export default function MainForm() {
       dob: undefined,
       agree: false,
       paymentMethod: "",
+      country: "",
     },
   });
 
@@ -91,7 +120,13 @@ export default function MainForm() {
           label="Date of Birth"
           control={form.control}
         />
-
+        <FormSelectWithInputSearch
+          name="country"
+          label="country"
+          placeholder="Select your country"
+          control={form.control}
+          options={countryOptions}
+        />
         <FormCheckbox
           name="agree"
           label="I agree to the terms and conditions"
