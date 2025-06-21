@@ -39,7 +39,9 @@ export const FormDatePicker = ({
               <FormControl>
                 <Button
                   variant={"outline"}
-                  className={"w-full pl-3 text-left font-normal rounded-[4px] bg-transparent"}
+                  className={
+                    "w-full pl-3 text-left font-normal rounded-[4px] bg-transparent"
+                  }
                 >
                   {field.value ? (
                     format(field.value, "PPP")
@@ -54,7 +56,7 @@ export const FormDatePicker = ({
               <Calendar
                 mode="single"
                 selected={field.value}
-                 onSelect={(date) => field.onChange(date ?? undefined)}
+                onSelect={(date) => field.onChange(date ?? undefined)}
                 initialFocus
                 captionLayout="dropdown" // ✅ Year + Month dropdown
                 fromYear={1950} // ✅ Start from 1950

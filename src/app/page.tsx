@@ -1,3 +1,4 @@
+import LoginPage from "@/components/module/authentication/SignIn";
 import Banner from "@/components/module/Banner";  
 import MainForm from "@/components/module/form/MainForm";
 import { PButton } from "@/components/PButton";
@@ -12,6 +13,7 @@ export default function Home() {
         Start Your Pet's Journey
       </PButton>
       <MainForm />
+      <LoginPage />
     </main>
   );
 }
