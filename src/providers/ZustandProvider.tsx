@@ -1,25 +1,28 @@
-'use client';
+"use client";
 
-import { useStore } from '@/store/store';
-import { useEffect } from 'react';
+import { useStore } from "@/store/store";
+import { useEffect } from "react";
 
 interface ZustandProviderProps {
   children: React.ReactNode;
   count?: number;
   filter?: string;
-  data?: any[];
+  productData?: any[];
+  userData?: any[];
 }
 
 export function ZustandProvider({ children, ...props }: ZustandProviderProps) {
-  const initializeStore = useStore((state) => state.setData);
+  const { setProductData, setUserData } = useStore((state) => state);
 
   useEffect(() => {
     // Initialize store with server-side props
-    if (props.data) {
-      initializeStore(props.data);
+    if (props.productData) {
+      setProductData(props.productData);
     }
-    // You can add other initializations here if needed
-  }, [initializeStore, props.data]);
+    if (props.userData) {
+      setUserData(props.userData);
+    }
+  }, []);
 
   return children;
 }

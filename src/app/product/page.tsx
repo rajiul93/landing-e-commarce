@@ -1,24 +1,27 @@
- 
-import { CounterFilter } from '@/components/module/CounterFilter/CounterFilter';
-import { ZustandProvider } from '@/providers/ZustandProvider';
+import { CounterFilter } from "@/components/module/CounterFilter/CounterFilter";
 
 async function getData() {
-  const res = await fetch('https://jsonplaceholder.typicode.com/posts');
-  if (!res.ok) {
-    throw new Error('Failed to fetch data');
+  const resProduct = await fetch("https://jsonplaceholder.typicode.com/posts");
+  const resUser = await fetch("https://jsonplaceholder.typicode.com/users");
+  if (!resProduct.ok) {
+    throw new Error("Failed to fetch product data");
   }
-  return res.json();
+  if (!resUser.ok) {
+    throw new Error("Failed to fetch user data");
+  }
+  const productData = await resProduct.json();
+  const userData = await resUser.json();
+  return { productData, userData };
 }
 
 export default async function Home() {
-  const data = await getData();
+  const { productData ,userData } = await getData(); 
+  
 
   return (
     <main className="min-h-screen p-24">
       <h1 className="text-2xl font-bold mb-8">Next.js 15 with Zustand</h1>
-      <ZustandProvider data={data}>
-        <CounterFilter />
-      </ZustandProvider>
+        <CounterFilter productData={productData} users={userData} /> 
     </main>
   );
 }

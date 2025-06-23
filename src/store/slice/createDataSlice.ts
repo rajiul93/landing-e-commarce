@@ -1,13 +1,15 @@
 export interface TDataSlice {
   data: any[];
+  setProductData: (data: any[]) => void;
+
   filter: string;
-  setData: (data: any[]) => void;
   setFilter: (filter: string) => void;
 }
 
-export const createDataSlice = (set: any): TDataSlice => ({
+export const createProductDataSlice = (set: any): TDataSlice => ({
   data: [],
+  setProductData: (data) => set({ data }),
+
   filter: "",
-  setData: (data) => set({ data }),
   setFilter: (filter) => set({ filter }),
 });
